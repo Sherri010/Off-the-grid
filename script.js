@@ -8,6 +8,7 @@ var ground =[[1,1,0,1,1,1],
 
 ///first player : user
 //second player :computer
+//for player have x and y to work as indxes in grid
 
 $(document).ready(function(){
 
@@ -53,22 +54,31 @@ Player.prototype.setReady=function(){
         console.log("initializing player...");
         var p=this;
       $('body').keydown(function(e){
-        console.log(p1.id+" "+e.which);
         p.repostion(e.which);
     });
 
 }
 
 Player.prototype.repostion=function(key){
- console.log(this.id+" "+key);
+ switch(key){
+   case 38:
+     console.log("up");
+     break;
+  case 40:
+    console.log("down");
+    break;
+  case 37:
+    console.log("left");
+    break;
+  case 39:
+    console.log("right");
+    break;
+  default:
+    break;
 
+ }
 }
-
-
-
-
-
-
+// I can check my sibilings -
 /////////////////////////////////////
 var game = new Game({ board:$('#wrapper'), g:ground});
 var p1= new Player({img:"super.gif", name:"man", id:"finder" });
