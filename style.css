@@ -1,0 +1,20 @@
+#wrapper {margin:0 auto; background-color:black;height:600px;width:600px;}
+
+#finder { background:white;}
+#runner { background:pink;}
+
+
+
+
+/* classes*/
+.cell { margin:0;
+        width:100px;
+        height:100px;
+        background:blue;
+        display:
+        inline-block;float:left;
+        color:white;
+      }
+
+.off { background: #004d00;}
+.on { background: #000066;}
