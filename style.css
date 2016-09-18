@@ -1,7 +1,7 @@
 #wrapper {margin:0 auto; background-color:black;height:600px;width:600px;}
 
-#finder { background:white;}
-#runner { background:pink;}
+.finder { background:white !important;}
+.runner { background:pink;}
 
 
 
