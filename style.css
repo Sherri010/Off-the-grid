@@ -1,30 +1,32 @@
 body{ background: #001a33;padding:60px 300px;}
 h1 {font-family: 'Bungee', cursive;color:#fff;text-align: center; margin-bottom:100px;font-size: 60px;}
 
-#wrapper {margin:0 auto; background-color:black;height:600px;width:600px;}
+#wrapper {margin:0 auto; background-color:black;
+          height:600px;width:600px;
+          }
 
 .finder { background:url('pakman.gif') !important;
-     -moz-transform: scaleX(-1);
+      -moz-transform: scaleX(-1);
       -o-transform: scaleX(-1);
       -webkit-transform: scaleX(-1);
       transform: scaleX(-1);
       filter: FlipH;
-      -ms-filter: "FlipH";}
+      -ms-filter: "FlipH";
+      }
 
-.devil { background:url('devil2.gif') !important;}
+.devil { background:url('devil2.gif') !important;
+        }
 
 
-
+.eaten { background: #660033; }
 
 /* classes*/
 .cell { margin:0;
         width:100px;
         height:100px;
-        background:blue;
         display:
-        inline-block;float:left;
-        color:white;
-
+        inline-block;
+        float:left;
       }
 
 .off { background: #000080;  box-sizing: border-box; border:20px solid black;}

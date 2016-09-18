@@ -1,4 +1,4 @@
-
+window.focus();
 var ground =[[1,1,0,1,1,1],
              [0,1,0,1,0,1],
              [0,1,0,1,1,1],
@@ -39,7 +39,6 @@ Game.prototype.addPlayers=function(player){
 
   this.players.push(player);
   var el=document.getElementsByClassName('cell')[ player.x*this.ground[0].length+player.y];
-  console.log(el)
   var elementClassList= $(el).attr('class');
   elementClassList = elementClassList.concat(" "+player.id);
   $(el).attr('class',elementClassList);
@@ -65,7 +64,7 @@ Devil.prototype.move=function(){
   //1: right    2: left
   //3: up       4: down
   var d=this;
-function guessMove(){ console.log("devil is"+d)
+function guessMove(){
     d.nextMove = Math.floor(Math.random() * 4) + 1 ;
 if(d.nextMove == 1 && game.ground[d.x][d.y+1] == 1){
         //where player is now
@@ -161,7 +160,7 @@ var before,after,identifier,swap_temp;
           identifier = this.x.toString()+ (this.y).toString();
           after = document.getElementById(identifier);
           swap_temp =  before.getAttribute('class');
-          before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
+          before.setAttribute('class', "cell eaten");
           after.setAttribute('class', after.getAttribute('class')+" "+this.id);
      }
    else { console.log('blocked');}
@@ -178,7 +177,7 @@ var before,after,identifier,swap_temp;
          identifier = this.x.toString()+ (this.y).toString();
          after = document.getElementById(identifier);
          swap_temp =  before.getAttribute('class');
-         before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
+         before.setAttribute('class',"cell eaten");
          after.setAttribute('class', after.getAttribute('class')+" "+this.id);
     }   else { console.log('blocked');}
 
@@ -195,7 +194,7 @@ var before,after,identifier,swap_temp;
         identifier = this.x.toString()+ (this.y).toString();
         after = document.getElementById(identifier);
         swap_temp =  before.getAttribute('class');
-        before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
+        before.setAttribute('class', "cell eaten");
         after.setAttribute('class', after.getAttribute('class')+" "+this.id);
 
 
@@ -213,7 +212,7 @@ var before,after,identifier,swap_temp;
          identifier = this.x.toString()+ (this.y).toString();
          after = document.getElementById(identifier);
          swap_temp =  before.getAttribute('class');
-         before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
+         before.setAttribute('class', "cell eaten");
          after.setAttribute('class', after.getAttribute('class')+" "+this.id);
 
    }
