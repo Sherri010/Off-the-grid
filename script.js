@@ -35,20 +35,97 @@ Game.prototype.init=function(){
   console.log("initializing game...")
 }
 
-Game.prototype.addPlayers=function(finder){
-  // this.players.push(runner);
-   this.players.push(finder);
-  var elementClassList= $('div:eq(1)').attr('class');
-  elementClassList = elementClassList.concat(" "+finder.id);
-  $('div:eq(1)').attr('class',elementClassList);
-}
+Game.prototype.addPlayers=function(player){
 
-/// CREATING OBJECT TO HOLD POSITION DATA FOR EACH MOVE, LIKE A TEMP VAR
+  this.players.push(player);
+  var el=document.getElementsByClassName('cell')[ player.x*this.ground[0].length+player.y];
+  console.log(el)
+  var elementClassList= $(el).attr('class');
+  elementClassList = elementClassList.concat(" "+player.id);
+  $(el).attr('class',elementClassList);
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+/// CREATING OBJECT TO HOLD POSITION DATA FOR EACH MOVE- used for both player and devils
 function CurrenPosition(p){
    this.x=p.x;
    this.y=p.y;
 }
+////////////////////////////////////////////////////////////////////////////////////////////
+// CREATING DEVILS
+function Devil(setting){
+  this.name=setting.name;
+  this.id=setting.id;
+  this.x=setting.x;
+  this.y=setting.y;
+  this.nextMove=null;
+}
 
+Devil.prototype.move=function(){
+  //1: right    2: left
+  //3: up       4: down
+  var d=this;
+function guessMove(){ console.log("devil is"+d)
+    d.nextMove = Math.floor(Math.random() * 4) + 1 ;
+if(d.nextMove == 1 && game.ground[d.x][d.y+1] == 1){
+        //where player is now
+         identifier=d.x.toString()+d.y.toString();
+         before =document.getElementById(identifier);
+         //where it's going
+         d.y+=1
+         identifier = d.x.toString()+ (d.y).toString();
+         after = document.getElementById(identifier);
+         swap_temp =  before.getAttribute('class');
+         before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
+         after.setAttribute('class', after.getAttribute('class')+" "+d.id);
+    }
+
+
+   if(d.nextMove == 2 && game.ground[d.x][d.y-1] == 1){
+           //where player is now
+            identifier=d.x.toString()+d.y.toString();
+            before =document.getElementById(identifier);
+            //where it's going
+            d.y-=1
+            identifier = d.x.toString()+ (d.y).toString();
+            after = document.getElementById(identifier);
+            swap_temp =  before.getAttribute('class');
+            before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
+            after.setAttribute('class', after.getAttribute('class')+" "+d.id);
+       }
+
+      if(d.nextMove == 3 && game.ground[d.x-1][d.y] == 1){
+              //where player is now
+               identifier=d.x.toString()+d.y.toString();
+               before =document.getElementById(identifier);
+               //where it's going
+               d.x-=1
+               identifier = d.x.toString()+ (d.y).toString();
+               after = document.getElementById(identifier);
+               swap_temp =  before.getAttribute('class');
+               before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
+               after.setAttribute('class', after.getAttribute('class')+" "+d.id);
+          }
+
+         if(d.nextMove == 4 && game.ground[d.x+1][d.y] == 1){
+                 //where player is now
+                  identifier=d.x.toString()+d.y.toString();
+                  before =document.getElementById(identifier);
+                  //where it's going
+                  d.x+=1
+                  identifier = d.x.toString()+ (d.y).toString();
+                  after = document.getElementById(identifier);
+                  swap_temp =  before.getAttribute('class');
+                  before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
+                  after.setAttribute('class', after.getAttribute('class')+" "+d.id);
+         }
+}
+          setInterval(guessMove,200);
+
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
 
 //CREATING PLAYER OBJECT
 function Player(setting){
@@ -75,70 +152,69 @@ var before,after,identifier,swap_temp;
  switch(key){
    case 38:
        //console.log("up");
-     if(game.ground[p1Current.x-1][p1Current.y] == 1){
-
+     if(game.ground[this.x-1][this.y] == 1){
          //where player is now
-          identifier=p1Current.x.toString()+p1Current.y.toString();
+          identifier=this.x.toString()+this.y.toString();
           before =document.getElementById(identifier);
           //where it's going
-          p1Current.x-=1
-          identifier = p1Current.x.toString()+ (p1Current.y).toString();
+          this.x-=1
+          identifier = this.x.toString()+ (this.y).toString();
           after = document.getElementById(identifier);
           swap_temp =  before.getAttribute('class');
           before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
-          after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
+          after.setAttribute('class', after.getAttribute('class')+" "+this.id);
      }
    else { console.log('blocked');}
      break;
   case 40:
     //  console.log("down");
-    if(game.ground[p1Current.x+1][p1Current.y] == 1){
+    if(game.ground[this.x+1][this.y] == 1){
 
         //where player is now
-         identifier=p1Current.x.toString()+p1Current.y.toString();
+         identifier=this.x.toString()+this.y.toString();
          before =document.getElementById(identifier);
          //where it's going
-         p1Current.x+=1
-         identifier = p1Current.x.toString()+ (p1Current.y).toString();
+         this.x+=1
+         identifier = this.x.toString()+ (this.y).toString();
          after = document.getElementById(identifier);
          swap_temp =  before.getAttribute('class');
          before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
-         after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
+         after.setAttribute('class', after.getAttribute('class')+" "+this.id);
     }   else { console.log('blocked');}
 
     break;
   case 37:
    //  console.log("left");
-   if(game.ground[p1Current.x][p1Current.y-1] === 1){
+   if(game.ground[this.x][this.y-1] === 1){
 
        //where player is now
-        identifier=p1Current.x.toString()+p1Current.y.toString();
+        identifier=this.x.toString()+this.y.toString();
         before =document.getElementById(identifier);
         //where it's going
-        p1Current.y-=1
-        identifier = p1Current.x.toString()+ (p1Current.y).toString();
+        this.y-=1
+        identifier = this.x.toString()+ (this.y).toString();
         after = document.getElementById(identifier);
         swap_temp =  before.getAttribute('class');
         before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
-        after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
+        after.setAttribute('class', after.getAttribute('class')+" "+this.id);
 
 
    }   else { console.log('blocked');}
     break;
   case 39:
     // console.log("right");
-     if(game.ground[p1Current.x][p1Current.y+1] === 1){
+     if(game.ground[this.x][this.y+1] === 1){
 
         //where player is now
-         identifier=p1Current.x.toString()+p1Current.y.toString();
+         identifier=this.x.toString()+this.y.toString();
          before =document.getElementById(identifier);
          //where it's going
-         p1Current.y+=1
-         identifier = p1Current.x.toString()+ (p1Current.y).toString();
+         this.y+=1
+         identifier = this.x.toString()+ (this.y).toString();
          after = document.getElementById(identifier);
          swap_temp =  before.getAttribute('class');
          before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
-         after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
+         after.setAttribute('class', after.getAttribute('class')+" "+this.id);
 
    }
    else { console.log('blocked');}
@@ -152,10 +228,13 @@ var before,after,identifier,swap_temp;
 /////////////////////////////////////
 var game = new Game({ board:$('#wrapper'), g:ground});
 var p1= new Player({img:"super.gif", name:"man", id:"finder",x:0,y:0 });
+var d1=new Devil({name:"lusi",x:5,y:3,id:"devil"});
 var p1Current = new CurrenPosition(p1);
+var d1Current = new CurrenPosition(d1);
 
 game.init();
 p1.setReady(game);
 game.addPlayers(p1);
-
+game.addPlayers(d1);
+d1.move();
 });
