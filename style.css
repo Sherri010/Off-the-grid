@@ -10,8 +10,10 @@ h1  { color:#fff;
 
 #wrapper {margin:0 auto;
           background-color:black;
-          height:600px;width:600px;
+          height:600px;width:800px;
+
           }
+
 #winner {
           margin:0 auto;
           color:#cc0066;
@@ -20,6 +22,10 @@ h1  { color:#fff;
            padding:100px;
            text-align: center;
          }
+.msg {    background: url('d.jpg');
+          background-repeat: no-repeat;
+          background-size: auto;}
+#yellow { color:yellow;}          
 
 .finder { background:url('pakman.gif') !important;
       -moz-transform: scaleX(-1);

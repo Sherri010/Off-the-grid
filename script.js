@@ -1,10 +1,10 @@
 window.focus();
-var ground =[[1,1,0,1,1,1],
-             [0,1,0,1,0,1],
-             [0,1,0,1,1,1],
-             [0,1,1,1,1,1],
-             [0,0,0,1,1,0],
-             [1,1,1,1,0,0]];
+var ground =[[1,1,0,1,1,1,0,1],
+             [0,1,0,1,0,1,0,1],
+             [0,1,0,1,1,1,0,1],
+             [0,1,1,1,1,1,1,1],
+             [0,0,0,1,1,0,1,1],
+             [1,1,1,1,0,0,0,0]];
 
 ///first player : user
 //second player :computer
@@ -12,7 +12,7 @@ var ground =[[1,1,0,1,1,1],
 var cellsToEat=0;
 for(var i=0 ;i<ground.length;i++){
   ground[i].forEach(function(cell){
-  cellsToEat+=   (cell === 1)?  1:0;
+  cellsToEat+= (cell === 1)?  1:0;
   });
 }
 
@@ -33,8 +33,8 @@ function Game(setting){
 
 Game.prototype.init=function(){
   var status;
-   for(var i=0 ; i< 6 ; i++){
-      for(var j=0 ; j<6 ; j++){
+   for(var i=0 ; i< this.ground.length ; i++){
+      for(var j=0 ; j< this.ground[0].length; j++){
           status = (this.ground[i][j] === 1)? "on":"off";
           this.board.append("<div class='cell "+status+"' id='"+i+j+"'></div>");
       }
@@ -46,18 +46,24 @@ Game.prototype.init=function(){
 Game.prototype.addPlayers=function(player){
 
   this.players.push(player);
-  var el=document.getElementsByClassName('cell')[ player.x*this.ground[0].length+player.y];
-  var elementClassList= $(el).attr('class');
-  elementClassList = elementClassList.concat(" "+player.id);
+  var el=document.getElementsByClassName('cell')[ (player.x * this.ground[0].length) + player.y];
+
+  var elementClassList= $(el).attr('class');  console.log("element"+ elementClassList)
+   elementClassList = elementClassList.concat(" "+player.id);
   $(el).attr('class',elementClassList);
 
 }
-////////////////////////////////////////////////////////////////////////////////////////////
-/// CREATING OBJECT TO HOLD POSITION DATA FOR EACH MOVE-can be used for both player and devils
-function CurrenPosition(p){
-   this.x=p.x;
-   this.y=p.y;
+
+
+Game.prototype.announce= function(winner){
+  $("#wrapper").hide();
+   var msg = " <div id='winner'>Winner Is <span id='yellow'>"+ winner.name +"</span></div>";
+  $('body').append(msg);
+  clearInterval(interval);
+ $('body').off('keydown');
+
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 // CREATING DEVILS
 function Devil(setting){
@@ -128,10 +134,8 @@ if(d.nextMove == 1 && game.ground[d.x][d.y+1] == 1){
          }
 
          if(player.x === d.x && player.y === d.y) {
-          $("#wrapper").hide();
-          $('body').append("<div id='winner'> Game Over</div>");
-          clearInterval(interval);
-         $('body').off('keydown'); }
+           game.announce(d);
+         }
 
 
 }
@@ -248,13 +252,13 @@ var before,after,identifier,swap_temp;
  }
    console.log("eaten: "+ this.cellsEaten)
 
-   if(this.cellsEaten === game.cellsToEat) { alert(" You Win! ");}
+   if(this.cellsEaten === game.cellsToEat) { game.announce(this);}
 }
 
 /////////////////////////////////////
 var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat});
-var p1= new Player({img:"super.gif", name:"man", id:"finder",x:0,y:0 });
-var d1=new Devil({name:"lusi",x:5,y:3,id:"devil"});
+var p1= new Player({img:"super.gif", name:"pacman", id:"finder",x:0,y:0 });
+var d1=new Devil({name:"lucifer",x:5,y:3,id:"devil"});
 console.log(game)
 console.log(p1)
 game.init();
