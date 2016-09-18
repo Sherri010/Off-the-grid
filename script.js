@@ -9,6 +9,12 @@ var ground =[[1,1,0,1,1,1],
 ///first player : user
 //second player :computer
 //for player have x and y to work as indxes in grid
+var cellsToEat=0;
+for(var i=0 ;i<ground.length;i++){
+  ground[i].forEach(function(cell){
+  cellsToEat+=   (cell === 1)?  1:0;
+  });
+}
 
 
 $(document).ready(function(){
@@ -20,6 +26,7 @@ function Game(setting){
   this.board=setting.board;
   this.players=[];
   this.ground=setting.g;
+  this.cellsToEat=setting.cte;
   //this.currentCell = $('#wrapper div:first-child');
 
 }
@@ -46,7 +53,7 @@ Game.prototype.addPlayers=function(player){
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
-/// CREATING OBJECT TO HOLD POSITION DATA FOR EACH MOVE- used for both player and devils
+/// CREATING OBJECT TO HOLD POSITION DATA FOR EACH MOVE-can be used for both player and devils
 function CurrenPosition(p){
    this.x=p.x;
    this.y=p.y;
@@ -61,7 +68,7 @@ function Devil(setting){
   this.nextMove=null;
 }
 
-Devil.prototype.move=function(){
+Devil.prototype.move=function(player){
   //1: right    2: left
   //3: up       4: down
   var d=this;
@@ -120,6 +127,13 @@ if(d.nextMove == 1 && game.ground[d.x][d.y+1] == 1){
                   after.setAttribute('class', after.getAttribute('class')+" "+d.id);
          }
 
+         if(player.x === d.x && player.y === d.y) {
+          $("#wrapper").hide();
+          $('body').append("<div id='winner'> Game Over</div>");
+          clearInterval(interval);
+         $('body').off('keydown'); }
+
+
 }
         interval =  setInterval(guessMove,200);
 
@@ -130,8 +144,8 @@ if(d.nextMove == 1 && game.ground[d.x][d.y+1] == 1){
 
 //CREATING PLAYER OBJECT
 function Player(setting){
-   this.img=setting.img;
    this.name=setting.name;
+   this.cellsEaten =1;//the initial cell is count as eaten
    this.id=setting.id;
    this.x=setting.x;
    this.y=setting.y;
@@ -162,6 +176,8 @@ var before,after,identifier,swap_temp;
           identifier = this.x.toString()+ (this.y).toString();
           after = document.getElementById(identifier);
           swap_temp =  before.getAttribute('class');
+           if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
+               this.cellsEaten = this.cellsEaten + 1;
           before.setAttribute('class', "cell eaten");
           after.setAttribute('class', after.getAttribute('class')+" "+this.id);
      }
@@ -179,6 +195,8 @@ var before,after,identifier,swap_temp;
          identifier = this.x.toString()+ (this.y).toString();
          after = document.getElementById(identifier);
          swap_temp =  before.getAttribute('class');
+          if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
+              this.cellsEaten=this.cellsEaten + 1;
          before.setAttribute('class',"cell eaten");
          after.setAttribute('class', after.getAttribute('class')+" "+this.id);
     }   else { console.log('blocked');}
@@ -196,6 +214,8 @@ var before,after,identifier,swap_temp;
         identifier = this.x.toString()+ (this.y).toString();
         after = document.getElementById(identifier);
         swap_temp =  before.getAttribute('class');
+       if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
+            this.cellsEaten=this.cellsEaten + 1;
         before.setAttribute('class', "cell eaten");
         after.setAttribute('class', after.getAttribute('class')+" "+this.id);
 
@@ -214,33 +234,32 @@ var before,after,identifier,swap_temp;
          identifier = this.x.toString()+ (this.y).toString();
          after = document.getElementById(identifier);
          swap_temp =  before.getAttribute('class');
+         if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
+            this.cellsEaten=this.cellsEaten + 1;
          before.setAttribute('class', "cell eaten");
          after.setAttribute('class', after.getAttribute('class')+" "+this.id);
 
    }
-   else { console.log('blocked');}
+    else { console.log('blocked');}
     break;
   default:
     break;
 
  }
-    if(this.x === d1.x && this.y === d1.y) {
-     $("#wrapper").hide();
-     $('body').append("<div id='winner'> Game Over</div>");
-     clearInterval(interval);
-    $('body').off('keydown'); }
+   console.log("eaten: "+ this.cellsEaten)
+
+   if(this.cellsEaten === game.cellsToEat) { alert(" You Win! ");}
 }
 
 /////////////////////////////////////
-var game = new Game({ board:$('#wrapper'), g:ground});
+var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat});
 var p1= new Player({img:"super.gif", name:"man", id:"finder",x:0,y:0 });
 var d1=new Devil({name:"lusi",x:5,y:3,id:"devil"});
-var p1Current = new CurrenPosition(p1);
-var d1Current = new CurrenPosition(d1);
-
+console.log(game)
+console.log(p1)
 game.init();
 p1.setReady(game);
 game.addPlayers(p1);
 game.addPlayers(d1);
-d1.move();
+d1.move(p1);
 });
