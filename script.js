@@ -60,7 +60,7 @@ function Player(setting){
 
 }
 
-//add EVENT listener on players
+//ADDING EVENTLISTERNER TO PLAYER
 Player.prototype.setReady=function(){
         console.log("initializing player...");
         var p=this;
@@ -75,7 +75,7 @@ var before,after,identifier,swap_temp;
  switch(key){
    case 38:
        //console.log("up");
-     if(game.ground[p1Current.x-1][p1Current.y] === 1){
+     if(game.ground[p1Current.x-1][p1Current.y] == 1){
 
          //where player is now
           identifier=p1Current.x.toString()+p1Current.y.toString();
@@ -88,11 +88,11 @@ var before,after,identifier,swap_temp;
           before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
           after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
      }
-
+   else { console.log('blocked');}
      break;
   case 40:
     //  console.log("down");
-    if(game.ground[p1Current.x+1][p1Current.y] === 1){
+    if(game.ground[p1Current.x+1][p1Current.y] == 1){
 
         //where player is now
          identifier=p1Current.x.toString()+p1Current.y.toString();
@@ -104,8 +104,7 @@ var before,after,identifier,swap_temp;
          swap_temp =  before.getAttribute('class');
          before.setAttribute('class', swap_temp.slice(0,swap_temp.length-7));
          after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
-    }
-
+    }   else { console.log('blocked');}
 
     break;
   case 37:
@@ -124,7 +123,7 @@ var before,after,identifier,swap_temp;
         after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
 
 
-   }
+   }   else { console.log('blocked');}
     break;
   case 39:
     // console.log("right");
@@ -142,7 +141,7 @@ var before,after,identifier,swap_temp;
          after.setAttribute('class', after.getAttribute('class')+" "+p1.id);
 
    }
-   else { console.log('blocked')}
+   else { console.log('blocked');}
     break;
   default:
     break;

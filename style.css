@@ -1,6 +1,15 @@
+body{ background: #001a33;padding:60px 300px;}
+h1 {font-family: 'Bungee', cursive;color:#fff;text-align: center; margin-bottom:100px;font-size: 60px;}
+
 #wrapper {margin:0 auto; background-color:black;height:600px;width:600px;}
 
-.finder { background:white !important;}
+.finder { background:url('pakman.gif') !important;
+     -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+      filter: FlipH;
+      -ms-filter: "FlipH";}
 .runner { background:pink;}
 
 
@@ -17,4 +26,4 @@
       }
 
 .off { background: #004d00;}
-.on { background: #000066;}
+.on { background: #000;}
