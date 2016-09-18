@@ -1,9 +1,25 @@
-body{ background: #001a33;padding:60px 300px;}
-h1 {font-family: 'Bungee', cursive;color:#fff;text-align: center; margin-bottom:100px;font-size: 60px;}
+body{ background: #001a33;
+      padding:60px 300px;
+      font-family: 'Bungee', cursive;
+    }
 
-#wrapper {margin:0 auto; background-color:black;
+h1  { color:#fff;
+      text-align: center;
+      margin-bottom:100px;
+      font-size: 60px;}
+
+#wrapper {margin:0 auto;
+          background-color:black;
           height:600px;width:600px;
           }
+#winner {
+          margin:0 auto;
+          color:#cc0066;
+          font-size: 80px;
+           z-index:10;width:60%;
+           padding:100px;
+           text-align: center;
+         }
 
 .finder { background:url('pakman.gif') !important;
       -moz-transform: scaleX(-1);
@@ -29,5 +45,8 @@ h1 {font-family: 'Bungee', cursive;color:#fff;text-align: center; margin-bottom:
         float:left;
       }
 
-.off { background: #000080;  box-sizing: border-box; border:20px solid black;}
+.off { background: #000080;
+       box-sizing: border-box;
+       border:20px solid black;}
+
 .on { background: #000;}

@@ -13,6 +13,7 @@ var ground =[[1,1,0,1,1,1],
 
 $(document).ready(function(){
 
+var interval;
 //CREATING GAME OBJECT
 
 function Game(setting){
@@ -118,8 +119,9 @@ if(d.nextMove == 1 && game.ground[d.x][d.y+1] == 1){
                   before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
                   after.setAttribute('class', after.getAttribute('class')+" "+d.id);
          }
+
 }
-          setInterval(guessMove,200);
+        interval =  setInterval(guessMove,200);
 
 }
 
@@ -222,6 +224,11 @@ var before,after,identifier,swap_temp;
     break;
 
  }
+    if(this.x === d1.x && this.y === d1.y) {
+     $("#wrapper").hide();
+     $('body').append("<div id='winner'> Game Over</div>");
+     clearInterval(interval);
+    $('body').off('keydown'); }
 }
 
 /////////////////////////////////////
