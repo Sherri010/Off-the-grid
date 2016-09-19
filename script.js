@@ -34,6 +34,8 @@ function Game(setting){
   this.players=[];
   this.ground=setting.g;
   this.cellsToEat=setting.cte;
+  this.Arrows = setting.Arrows;
+
   //this.currentCell = $('#wrapper div:first-child');
 
 }
@@ -178,7 +180,7 @@ identifier=this.x.toString()+this.y.toString();
 before =document.getElementById(identifier);
 
  switch(key){
-   case Arrows.up:
+   case game.Arrows.up:
        //console.log("up");
      if( this.x-1 > -1 && game.ground[this.x-1][this.y] === 1){
           this.x= this.x-1;
@@ -186,7 +188,7 @@ before =document.getElementById(identifier);
           after = document.getElementById(identifier);
      }else {console.log('block');}
      break;
-  case Arrows.down:
+  case game.Arrows.down:
     //  console.log("down");
     if(this.x+1 <game.ground.length && game.ground[this.x+1][this.y] === 1){
          this.x= this.x+1;
@@ -194,7 +196,7 @@ before =document.getElementById(identifier);
          after = document.getElementById(identifier);
     }else {console.log('block');}
     break;
-  case Arrows.left:
+  case game.Arrows.left:
    //  console.log("left");
    if( this.y-1 > -1 && game.ground[this.x][this.y-1] === 1){
         this.y= this.y - 1;
@@ -202,7 +204,7 @@ before =document.getElementById(identifier);
         after = document.getElementById(identifier);
    }else {console.log('block');}
     break;
-  case Arrows.right:
+  case game.Arrows.right:
     // console.log("right");
      if(this.y+1 < game.ground[0].length && game.ground[this.x][this.y+1] === 1){
         this.y= this.y+1;
@@ -238,7 +240,7 @@ Player.prototype.reset = function(setting){
 
 
 /////////////////////////////////////
-var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat});
+var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat, Arrows:{left: 37 , up : 38 ,  right : 39 ,  down : 40 }});
 var p1= new Player({img:"super.gif", name:"pacman", id:"finder",x:0,y:0 });
 var d1=new Devil({name:"ghost",x:3,y:4,id:"devil"});
 console.log(game)
