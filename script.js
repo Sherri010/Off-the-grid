@@ -229,7 +229,7 @@ Player.prototype.reset = function(setting){
 /////////////////////////////////////
 var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat});
 var p1= new Player({img:"super.gif", name:"pacman", id:"finder",x:0,y:0 });
-var d1=new Devil({name:"lucifer",x:3,y:4,id:"devil"});
+var d1=new Devil({name:"ghost",x:3,y:4,id:"devil"});
 console.log(game)
 console.log(p1)
 game.init();
