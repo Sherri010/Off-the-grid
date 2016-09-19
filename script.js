@@ -5,7 +5,13 @@ var ground =[[1,1,0,1,1,1,0,1,1,1],
              [0,1,1,1,1,1,1,1,1,0],
              [0,0,0,1,1,0,1,1,1,1],
              [1,1,1,1,0,0,0,0,1,1]];
+var Arrows = {
+  left: 37 ,
+  up : 38 ,
+  right : 39 ,
+  down : 40
 
+}
 ///first player : user
 //second player :computer
 //for player have x and y to work as indxes in grid
@@ -90,21 +96,17 @@ function guessMove(){
 
     switch(d.nextMove){
       case 1:
-<<<<<<< HEAD
+
           if(d.y+1 < game.ground[0].length && game.ground[d.x][d.y+1] === 1){
-=======
-          if(d.y+1 <game.ground.length && game.ground[d.x][d.y+1] === 1){
->>>>>>> gh-pages
+
               d.y=d.y+1;
           }
           break;
 
       case 2:
-<<<<<<< HEAD
+
          if(d.y-1 > -1 && game.ground[d.x][d.y-1] === 1){
-=======
-         if( d.y-1 > -1 && game.ground[d.x][d.y-1] === 1){
->>>>>>> gh-pages
+
                d.y=d.y-1;
           }
           break;
@@ -115,11 +117,9 @@ function guessMove(){
           break;
 
       case 4:
-<<<<<<< HEAD
-         if(d.x+1 <game.ground[0] && game.ground[d.x+1][d.y] === 1){
-=======
-         if( d.x+1 < game.ground.length && game.ground[d.x+1][d.y] === 1){
->>>>>>> gh-pages
+
+         if(d.x+1 <game.ground.length && game.ground[d.x+1][d.y] === 1){
+
               d.x=d.x+1;
          }
         break;
@@ -178,7 +178,7 @@ identifier=this.x.toString()+this.y.toString();
 before =document.getElementById(identifier);
 
  switch(key){
-   case 38:
+   case Arrows.up:
        //console.log("up");
      if( this.x-1 > -1 && game.ground[this.x-1][this.y] === 1){
           this.x= this.x-1;
@@ -186,7 +186,7 @@ before =document.getElementById(identifier);
           after = document.getElementById(identifier);
      }else {console.log('block');}
      break;
-  case 40:
+  case Arrows.down:
     //  console.log("down");
     if(this.x+1 <game.ground.length && game.ground[this.x+1][this.y] === 1){
          this.x= this.x+1;
@@ -194,7 +194,7 @@ before =document.getElementById(identifier);
          after = document.getElementById(identifier);
     }else {console.log('block');}
     break;
-  case 37:
+  case Arrows.left:
    //  console.log("left");
    if( this.y-1 > -1 && game.ground[this.x][this.y-1] === 1){
         this.y= this.y - 1;
@@ -202,7 +202,7 @@ before =document.getElementById(identifier);
         after = document.getElementById(identifier);
    }else {console.log('block');}
     break;
-  case 39:
+  case Arrows.right:
     // console.log("right");
      if(this.y+1 < game.ground[0].length && game.ground[this.x][this.y+1] === 1){
         this.y= this.y+1;
