@@ -16,6 +16,7 @@ for(var i=0 ;i<ground.length;i++){
   });
 }
 
+console.log('has to catch: '+cellsToEat);
 
 $(document).ready(function(){
 
@@ -39,8 +40,8 @@ Game.prototype.init=function(){
           this.board.append("<div class='cell "+status+"' id='"+i+j+"'></div>");
       }
     }
-
-  console.log("initializing game...")
+  $('#reset').show();
+  console.log("initializing game...");
 }
 
 Game.prototype.addPlayers=function(player){
@@ -55,7 +56,7 @@ Game.prototype.addPlayers=function(player){
 }
 
 
-Game.prototype.announce= function(winner){
+Game.prototype.announce = function(winner){
   $("#wrapper").hide();
    var msg = " <div id='winner'>Winner Is <span id='yellow'>"+ winner.name +"</span></div>";
   $('body').append(msg);
@@ -63,7 +64,9 @@ Game.prototype.announce= function(winner){
  $('body').off('keydown');
 
 }
-
+Game.prototype.reset = function(){
+  
+}
 ////////////////////////////////////////////////////////////////////////////////////////////
 // CREATING DEVILS
 function Devil(setting){
@@ -80,74 +83,49 @@ Devil.prototype.move=function(player){
   var d=this;
 function guessMove(){
     d.nextMove = Math.floor(Math.random() * 4) + 1 ;
-    console.log(d.nextMove)
+
+    //where player is now
+     identifier=d.x.toString()+d.y.toString();
+     before =document.getElementById(identifier);
+
+    //console.log(d.nextMove)
     switch(d.nextMove){
       case 1:
           if( game.ground[d.x][d.y+1] === 1){
-        //where player is now
-         identifier=d.x.toString()+d.y.toString();
-         before =document.getElementById(identifier);
-         //where it's going
-         d.y=d.y+1
-         identifier = d.x.toString()+ (d.y).toString();
-         after = document.getElementById(identifier);
-         swap_temp =  before.getAttribute('class');
-         before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
-         after.setAttribute('class', after.getAttribute('class')+" "+d.id);
-    }
-    break;
+              d.y=d.y+1;
+          }
+          break;
 
-   case 2:
-       if(game.ground[d.x][d.y-1] === 1){
-           //where player is now
-            identifier=d.x.toString()+d.y.toString();
-            before =document.getElementById(identifier);
-            //where it's going
-            d.y=d.y-1
-            identifier = d.x.toString()+ (d.y).toString();
-            after = document.getElementById(identifier);
-            swap_temp =  before.getAttribute('class');
-            before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
-            after.setAttribute('class', after.getAttribute('class')+" "+d.id);
-       }
-    break;
-    case 3:
-
-      if( game.ground[d.x-1][d.y] === 1){
-              //where player is now
-               identifier=d.x.toString()+d.y.toString();
-               before =document.getElementById(identifier);
-               //where it's going
-               d.x=d.x-1
-               identifier = d.x.toString()+ (d.y).toString();
-               after = document.getElementById(identifier);
-               swap_temp =  before.getAttribute('class');
-               before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
-               after.setAttribute('class', after.getAttribute('class')+" "+d.id);
+      case 2:
+         if(game.ground[d.x][d.y-1] === 1){
+               d.y=d.y-1;
+          }
+          break;
+     case 3:
+        if( game.ground[d.x-1][d.y] === 1){
+               d.x=d.x-1;
           }
           break;
 
       case 4:
          if(game.ground[d.x+1][d.y] === 1){
-                 //where player is now
-                  identifier=d.x.toString()+d.y.toString();
-                  before =document.getElementById(identifier);
-                  //where it's going
-                  d.x=d.x+1;
-                  identifier = d.x.toString()+ (d.y).toString();
-                  after = document.getElementById(identifier);
-                  swap_temp =  before.getAttribute('class');
-                  before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
-                  after.setAttribute('class', after.getAttribute('class')+" "+d.id);
+              d.x=d.x+1;
          }
-      break;
-      default:
-       break;
-     }
-         if(player.x === d.x && player.y === d.y) {
-           game.announce(d);
-         }
+        break;
 
+      default:
+        break;
+     }
+
+         identifier = d.x.toString()+ d.y.toString();
+         after = document.getElementById(identifier);
+         swap_temp =  before.getAttribute('class');
+         before.setAttribute('class', swap_temp.slice(0,swap_temp.length-'devil'.length));
+         after.setAttribute('class', after.getAttribute('class')+" "+d.id);
+
+         if(player.x === d.x && player.y === d.y) {
+             game.announce(d);
+         }
 
 }
         interval =  setInterval(guessMove,200);
@@ -179,91 +157,60 @@ Player.prototype.setReady=function(){
 
 Player.prototype.repostion=function(key){
 var before,after,identifier,swap_temp;
+var keys=[37,38,39,40];
+identifier=this.x.toString()+this.y.toString();
+before =document.getElementById(identifier);
+
  switch(key){
    case 38:
        //console.log("up");
-     if(game.ground[this.x-1][this.y] == 1){
-         //where player is now
-          identifier=this.x.toString()+this.y.toString();
-          before =document.getElementById(identifier);
-          //where it's going
-          this.x-=1
-          identifier = this.x.toString()+ (this.y).toString();
+     if(game.ground[this.x-1][this.y] === 1){
+          this.x= this.x-1;
+          identifier = this.x.toString()+(this.y).toString();
           after = document.getElementById(identifier);
-          swap_temp =  before.getAttribute('class');
-           if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
-               this.cellsEaten = this.cellsEaten + 1;
-          before.setAttribute('class', "cell eaten");
-          after.setAttribute('class', after.getAttribute('class')+" "+this.id);
      }
-   else { console.log('blocked');}
      break;
   case 40:
     //  console.log("down");
-    if(game.ground[this.x+1][this.y] == 1){
-
-        //where player is now
-         identifier=this.x.toString()+this.y.toString();
-         before =document.getElementById(identifier);
-         //where it's going
-         this.x+=1
-         identifier = this.x.toString()+ (this.y).toString();
+    if(game.ground[this.x+1][this.y] === 1){
+         this.x= this.x+1;
+         identifier = this.x.toString()+(this.y).toString();
          after = document.getElementById(identifier);
-         swap_temp =  before.getAttribute('class');
-          if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
-              this.cellsEaten=this.cellsEaten + 1;
-         before.setAttribute('class',"cell eaten");
-         after.setAttribute('class', after.getAttribute('class')+" "+this.id);
-    }   else { console.log('blocked');}
-
+    }
     break;
   case 37:
    //  console.log("left");
    if(game.ground[this.x][this.y-1] === 1){
-
-       //where player is now
-        identifier=this.x.toString()+this.y.toString();
-        before =document.getElementById(identifier);
-        //where it's going
-        this.y-=1
-        identifier = this.x.toString()+ (this.y).toString();
+        this.y= this.y - 1;
+        identifier = this.x.toString()+(this.y).toString();
         after = document.getElementById(identifier);
-        swap_temp =  before.getAttribute('class');
-       if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
-            this.cellsEaten=this.cellsEaten + 1;
-        before.setAttribute('class', "cell eaten");
-        after.setAttribute('class', after.getAttribute('class')+" "+this.id);
-
-
-   }   else { console.log('blocked');}
+   }
     break;
   case 39:
     // console.log("right");
      if(game.ground[this.x][this.y+1] === 1){
-
-        //where player is now
-         identifier=this.x.toString()+this.y.toString();
-         before =document.getElementById(identifier);
-         //where it's going
-         this.y+=1
-         identifier = this.x.toString()+ (this.y).toString();
-         after = document.getElementById(identifier);
-         swap_temp =  before.getAttribute('class');
-         if(after.getAttribute('class').split(' ').indexOf('eaten') == -1)
-            this.cellsEaten=this.cellsEaten + 1;
-         before.setAttribute('class', "cell eaten");
-         after.setAttribute('class', after.getAttribute('class')+" "+this.id);
-
+        this.y= this.y+1;
+        identifier = this.x.toString()+(this.y).toString();
+        after = document.getElementById(identifier);
    }
-    else { console.log('blocked');}
+
     break;
   default:
     break;
-
  }
-   console.log("eaten: "+ this.cellsEaten)
 
-   if(this.cellsEaten === game.cellsToEat) { game.announce(this);}
+if(keys.indexOf(key) != -1){
+ swap_temp =  before.getAttribute('class');
+  if( after.getAttribute('class').split(' ').indexOf('eaten') === -1 ){
+      this.cellsEaten = this.cellsEaten + 1;
+      console.log(this.cellsEaten);
+    }
+ before.setAttribute('class', "cell eaten");
+ after.setAttribute('class', after.getAttribute('class')+" "+this.id);
+ }
+   //console.log("eaten: "+ this.cellsEaten)
+
+   if(this.cellsEaten === game.cellsToEat) {game.announce(this);}
 }
 
 /////////////////////////////////////

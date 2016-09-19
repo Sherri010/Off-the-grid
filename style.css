@@ -28,7 +28,10 @@ h1  { color:#fff;
 #yellow { color:yellow;}
 
 #infoboard {color:#fff; width:90%;}
-.info {width:2%;display: inline-block;margin-left:50px;}
+.info {width:3%;display: inline-block;margin-left:50px;margin-right:10px;}
+
+#reset { float:right; padding:10px; background: rgba(255,255,255,0.5);
+       color:#fff; border:none; font-size: 26px;cursor: pointer;}
 .finder { background:url('img/pakman.gif') !important;
       -moz-transform: scaleX(-1);
       -o-transform: scaleX(-1);
