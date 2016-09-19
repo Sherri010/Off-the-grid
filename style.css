@@ -5,12 +5,12 @@ body{ background: #001a33;
 
 h1  { color:#fff;
       text-align: center;
-      margin-bottom:100px;
+      margin-bottom:50px;
       font-size: 60px;}
 
 #wrapper {margin:0 auto;
           background-color:black;
-          height:600px;width:800px;
+          height:600px;width:1000px;
 
           }
 
@@ -22,12 +22,14 @@ h1  { color:#fff;
            padding:100px;
            text-align: center;
          }
-.msg {    background: url('d.jpg');
+.msg {    background: url('img/d.jpg');
           background-repeat: no-repeat;
           background-size: auto;}
-#yellow { color:yellow;}          
+#yellow { color:yellow;}
 
-.finder { background:url('pakman.gif') !important;
+#infoboard {color:#fff; width:90%;}
+.info {width:2%;display: inline-block;margin-left:50px;}
+.finder { background:url('img/pakman.gif') !important;
       -moz-transform: scaleX(-1);
       -o-transform: scaleX(-1);
       -webkit-transform: scaleX(-1);
@@ -36,11 +38,11 @@ h1  { color:#fff;
       -ms-filter: "FlipH";
       }
 
-.devil { background:url('devil2.gif') !important;
+.devil { background:url('img/devil2.gif') !important;
         }
 
 
-.eaten { background: #660033; }
+.eaten { background:#ffb84d ;/*rgba(255, 215, 0,0.5);*/ }
 
 /* classes*/
 .cell { margin:0;
@@ -51,7 +53,7 @@ h1  { color:#fff;
         float:left;
       }
 
-.off { background: #000080;
+.off { background:#0000e6;
        box-sizing: border-box;
        border:20px solid black;}
 

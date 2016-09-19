@@ -1,10 +1,10 @@
 window.focus();
-var ground =[[1,1,0,1,1,1,0,1],
-             [0,1,0,1,0,1,0,1],
-             [0,1,0,1,1,1,0,1],
-             [0,1,1,1,1,1,1,1],
-             [0,0,0,1,1,0,1,1],
-             [1,1,1,1,0,0,0,0]];
+var ground =[[1,1,0,1,1,1,0,1,1,1],
+             [0,1,0,1,0,1,0,1,1,0],
+             [0,1,0,1,1,1,0,1,0,0],
+             [0,1,1,1,1,1,1,1,1,0],
+             [0,0,0,1,1,0,1,1,1,1],
+             [1,1,1,1,0,0,0,0,1,1]];
 
 ///first player : user
 //second player :computer
@@ -80,59 +80,70 @@ Devil.prototype.move=function(player){
   var d=this;
 function guessMove(){
     d.nextMove = Math.floor(Math.random() * 4) + 1 ;
-if(d.nextMove == 1 && game.ground[d.x][d.y+1] == 1){
+    console.log(d.nextMove)
+    switch(d.nextMove){
+      case 1:
+          if( game.ground[d.x][d.y+1] === 1){
         //where player is now
          identifier=d.x.toString()+d.y.toString();
          before =document.getElementById(identifier);
          //where it's going
-         d.y+=1
+         d.y=d.y+1
          identifier = d.x.toString()+ (d.y).toString();
          after = document.getElementById(identifier);
          swap_temp =  before.getAttribute('class');
          before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
          after.setAttribute('class', after.getAttribute('class')+" "+d.id);
     }
+    break;
 
-
-   if(d.nextMove == 2 && game.ground[d.x][d.y-1] == 1){
+   case 2:
+       if(game.ground[d.x][d.y-1] === 1){
            //where player is now
             identifier=d.x.toString()+d.y.toString();
             before =document.getElementById(identifier);
             //where it's going
-            d.y-=1
+            d.y=d.y-1
             identifier = d.x.toString()+ (d.y).toString();
             after = document.getElementById(identifier);
             swap_temp =  before.getAttribute('class');
             before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
             after.setAttribute('class', after.getAttribute('class')+" "+d.id);
        }
+    break;
+    case 3:
 
-      if(d.nextMove == 3 && game.ground[d.x-1][d.y] == 1){
+      if( game.ground[d.x-1][d.y] === 1){
               //where player is now
                identifier=d.x.toString()+d.y.toString();
                before =document.getElementById(identifier);
                //where it's going
-               d.x-=1
+               d.x=d.x-1
                identifier = d.x.toString()+ (d.y).toString();
                after = document.getElementById(identifier);
                swap_temp =  before.getAttribute('class');
                before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
                after.setAttribute('class', after.getAttribute('class')+" "+d.id);
           }
+          break;
 
-         if(d.nextMove == 4 && game.ground[d.x+1][d.y] == 1){
+      case 4:
+         if(game.ground[d.x+1][d.y] === 1){
                  //where player is now
                   identifier=d.x.toString()+d.y.toString();
                   before =document.getElementById(identifier);
                   //where it's going
-                  d.x+=1
+                  d.x=d.x+1;
                   identifier = d.x.toString()+ (d.y).toString();
                   after = document.getElementById(identifier);
                   swap_temp =  before.getAttribute('class');
                   before.setAttribute('class', swap_temp.slice(0,swap_temp.length-5));
                   after.setAttribute('class', after.getAttribute('class')+" "+d.id);
          }
-
+      break;
+      default:
+       break;
+     }
          if(player.x === d.x && player.y === d.y) {
            game.announce(d);
          }
@@ -258,7 +269,7 @@ var before,after,identifier,swap_temp;
 /////////////////////////////////////
 var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat});
 var p1= new Player({img:"super.gif", name:"pacman", id:"finder",x:0,y:0 });
-var d1=new Devil({name:"lucifer",x:5,y:3,id:"devil"});
+var d1=new Devil({name:"lucifer",x:3,y:4,id:"devil"});
 console.log(game)
 console.log(p1)
 game.init();
