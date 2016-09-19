@@ -5,11 +5,14 @@ This is a simpler version of PACMAN developed using:
  - JavaScript
  - jQuery
 
+<<<<<<< HEAD
 
 
 
 [Play Now](https://sherri010.github.io/Off-the-grid/)
 
+=======
+>>>>>>> gh-pages
 ##How this game works:
 There are two players in this game, one is the user(pacman) and other is being conrolled by JavaScript(ghost). The goal is to travel through the maze and hit every open cell atleast once. once pacman covers the whole maze the game is over. If the the ghost catches pacman, you loose the game. 
 
@@ -17,7 +20,11 @@ There are two players in this game, one is the user(pacman) and other is being c
 you can use arrow keys to navigate through the maze. blue blocks are blocked.
 After the game is over, you can click on reset to start a new game.
 
+<<<<<<< HEAD
 
+=======
+[Play Now](https://sherri010.github.io/Off-the-grid/)
+>>>>>>> gh-pages
 
 
 ###RoadMap:
