@@ -88,27 +88,26 @@ function guessMove(){
      identifier=d.x.toString()+d.y.toString();
      before =document.getElementById(identifier);
 
-    //console.log(d.nextMove)
     switch(d.nextMove){
       case 1:
-          if( game.ground[d.x][d.y+1] === 1){
+          if(d.y+1 <game.ground.length && game.ground[d.x][d.y+1] === 1){
               d.y=d.y+1;
           }
           break;
 
       case 2:
-         if(game.ground[d.x][d.y-1] === 1){
+         if( d.y-1 > -1 && game.ground[d.x][d.y-1] === 1){
                d.y=d.y-1;
           }
           break;
      case 3:
-        if( game.ground[d.x-1][d.y] === 1){
+        if(d.x-1 > -1 && game.ground[d.x-1][d.y] === 1){
                d.x=d.x-1;
           }
           break;
 
       case 4:
-         if(game.ground[d.x+1][d.y] === 1){
+         if( d.x+1 < game.ground.length && game.ground[d.x+1][d.y] === 1){
               d.x=d.x+1;
          }
         break;
@@ -161,7 +160,7 @@ Player.prototype.setReady=function(){
 }
 
 Player.prototype.repostion=function(key){
-var before,after,identifier,swap_temp;
+var before,after=null,identifier,swap_temp;
 var keys=[37,38,39,40];
 identifier=this.x.toString()+this.y.toString();
 before =document.getElementById(identifier);
@@ -169,42 +168,42 @@ before =document.getElementById(identifier);
  switch(key){
    case 38:
        //console.log("up");
-     if(game.ground[this.x-1][this.y] === 1){
+     if( this.x-1 > -1 && game.ground[this.x-1][this.y] === 1){
           this.x= this.x-1;
           identifier = this.x.toString()+(this.y).toString();
           after = document.getElementById(identifier);
-     }
+     }else {console.log('block');}
      break;
   case 40:
     //  console.log("down");
-    if(game.ground[this.x+1][this.y] === 1){
+    if(this.x+1 <game.ground.length && game.ground[this.x+1][this.y] === 1){
          this.x= this.x+1;
          identifier = this.x.toString()+(this.y).toString();
          after = document.getElementById(identifier);
-    }
+    }else {console.log('block');}
     break;
   case 37:
    //  console.log("left");
-   if(game.ground[this.x][this.y-1] === 1){
+   if( this.y-1 > -1 && game.ground[this.x][this.y-1] === 1){
         this.y= this.y - 1;
         identifier = this.x.toString()+(this.y).toString();
         after = document.getElementById(identifier);
-   }
+   }else {console.log('block');}
     break;
   case 39:
     // console.log("right");
-     if(game.ground[this.x][this.y+1] === 1){
+     if(this.y+1 < game.ground[0].length && game.ground[this.x][this.y+1] === 1){
         this.y= this.y+1;
         identifier = this.x.toString()+(this.y).toString();
         after = document.getElementById(identifier);
-   }
+   }else {console.log('block');}
 
     break;
   default:
     break;
  }
 
-if(keys.indexOf(key) != -1){
+if(after != null){
  swap_temp =  before.getAttribute('class');
   if( after.getAttribute('class').split(' ').indexOf('eaten') === -1 ){
       this.cellsEaten = this.cellsEaten + 1;
@@ -229,7 +228,7 @@ Player.prototype.reset = function(setting){
 /////////////////////////////////////
 var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat});
 var p1= new Player({img:"super.gif", name:"pacman", id:"finder",x:0,y:0 });
-var d1=new Devil({name:"lucifer",x:3,y:4,id:"devil"});
+var d1=new Devil({name:"ghost",x:3,y:4,id:"devil"});
 console.log(game)
 console.log(p1)
 game.init();
