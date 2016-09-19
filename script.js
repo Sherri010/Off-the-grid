@@ -91,24 +91,24 @@ function guessMove(){
     //console.log(d.nextMove)
     switch(d.nextMove){
       case 1:
-          if( game.ground[d.x][d.y+1] === 1){
+          if(d.y+1 < game.ground[0].length && game.ground[d.x][d.y+1] === 1){
               d.y=d.y+1;
           }
           break;
 
       case 2:
-         if(game.ground[d.x][d.y-1] === 1){
+         if(d.y-1 > -1 && game.ground[d.x][d.y-1] === 1){
                d.y=d.y-1;
           }
           break;
      case 3:
-        if( game.ground[d.x-1][d.y] === 1){
+        if(d.x-1 > -1 && game.ground[d.x-1][d.y] === 1){
                d.x=d.x-1;
           }
           break;
 
       case 4:
-         if(game.ground[d.x+1][d.y] === 1){
+         if(d.x+1 <game.ground[0] && game.ground[d.x+1][d.y] === 1){
               d.x=d.x+1;
          }
         break;
