@@ -34,7 +34,8 @@ function Game(setting){
 
 Game.prototype.init=function(){
   var status;
-//  $('#wrapper').innerHTML="";
+  if($('#winner')){$('body').children('#winner').remove();}
+  this.board.show();
    for(var i=0 ; i< this.ground.length ; i++){
       for(var j=0 ; j< this.ground[0].length; j++){
           status = (this.ground[i][j] === 1)? "on":"off";
@@ -58,7 +59,7 @@ Game.prototype.addPlayers=function(player){
 
 
 Game.prototype.announce = function(winner){
-  $("#wrapper").hide();
+  this.board.hide();
    var msg = " <div id='winner'>Winner Is <span id='yellow'>"+ winner.name +"</span></div>";
   $('body').append(msg);
   clearInterval(interval);
@@ -238,8 +239,10 @@ $("#reset").on('click',function(){
    $('#wrapper').html('');
    clearInterval(interval);
    game.init();
-  game.addPlayers(p1);
-  game.addPlayers(d1);
+   p1.setReady(game);
+   game.addPlayers(p1);
+   game.addPlayers(d1);
+   d1.move(p1)
    console.log("reseting players...");
 });
 p1.setReady(game);
