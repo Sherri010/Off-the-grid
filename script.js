@@ -34,6 +34,7 @@ function Game(setting){
 
 Game.prototype.init=function(){
   var status;
+//  $('#wrapper').innerHTML="";
    for(var i=0 ; i< this.ground.length ; i++){
       for(var j=0 ; j< this.ground[0].length; j++){
           status = (this.ground[i][j] === 1)? "on":"off";
@@ -64,9 +65,7 @@ Game.prototype.announce = function(winner){
  $('body').off('keydown');
 
 }
-Game.prototype.reset = function(){
-  
-}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 // CREATING DEVILS
 function Devil(setting){
@@ -132,7 +131,12 @@ function guessMove(){
 
 }
 
+Devil.prototype.reset = function(setting){
+  this.x=setting.x;
+  this.y=setting.y;
+  this.nextMove=null;
 
+}
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 //CREATING PLAYER OBJECT
@@ -213,6 +217,14 @@ if(keys.indexOf(key) != -1){
    if(this.cellsEaten === game.cellsToEat) {game.announce(this);}
 }
 
+Player.prototype.reset = function(setting){
+   this.cellsEaten =1
+   this.x=setting.x;
+   this.y=setting.y;
+
+}
+
+
 /////////////////////////////////////
 var game = new Game({ board:$('#wrapper'), g:ground, cte:cellsToEat});
 var p1= new Player({img:"super.gif", name:"pacman", id:"finder",x:0,y:0 });
@@ -220,6 +232,16 @@ var d1=new Devil({name:"lucifer",x:3,y:4,id:"devil"});
 console.log(game)
 console.log(p1)
 game.init();
+$("#reset").on('click',function(){
+   p1.reset({x:0,y:0});
+   d1.reset({x:3,y:4});
+   $('#wrapper').html('');
+   clearInterval(interval);
+   game.init();
+  game.addPlayers(p1);
+  game.addPlayers(d1);
+   console.log("reseting players...");
+});
 p1.setReady(game);
 game.addPlayers(p1);
 game.addPlayers(d1);
